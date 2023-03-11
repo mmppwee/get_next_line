@@ -6,7 +6,7 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 18:24:48 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/02/26 17:51:04 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:54:39 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,6 @@ size_t	ft_strlen (const char *str)
 	while (str[i] != '\0')
 		i++;
 	return (i);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*s;
-	int	len;
-	int	i;
-
-	len = ft_strlen(s1);
-	s = malloc (sizeof(char) * (len + 1));
-	if (s == NULL)
-		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		s[i] = s1[i];
-		i++;
- 	}
-	s[i] == '\0';
-	free(s);
-	return (s);
 }
 
 char	*ft_strchr(const char *s, int c)
