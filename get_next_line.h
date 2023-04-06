@@ -6,13 +6,15 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:36:51 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/03/11 15:55:17 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/06 17:32:33 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 char	*get_next_line(int fd);
 size_t	ft_strlen (const char *str);

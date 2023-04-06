@@ -6,7 +6,7 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 18:24:48 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/03/11 15:54:39 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:09:19 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ char	*ft_strchr(const char *s, int c)
 	while (s[i] && s[i] != (char)c)
 		i++;
 	if (s[i] == (char)c)
-		return ((char *)&s[i]);
+		return ((char *)&s[i + 1]);
 	return (NULL);
 }
+
+
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
@@ -55,9 +57,9 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	while (s2[j] != '\0')
 	{
 		new[i + j] = s2[j];
-		j++
+		j++;
 	}
-	new[i + j] == '\0';
+	new[i + j] = '\0';
 	free (new);
 	return (new);
 }
