@@ -6,24 +6,22 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:35:57 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/04/06 18:15:11 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:20:51 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_check(char *str, char c)
+int	ft_check(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (1);
+	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	}
-	return (0);
+	if (str[i] == '\n')
+		return (0);
+	return (1);
 }
 
 char	*ft_returnline(const char *s)
@@ -32,9 +30,10 @@ char	*ft_returnline(const char *s)
 	int	i;
 	char	*line;
 
-	len = 0;
-	while (len != '\n' && len != '\0')
-		len++;
+	i = 0;
+	while (s[i] != '\n' && s[i] != '\0')
+		i++;
+	len = i;
 	line = malloc (sizeof(char) * (len + 1));
 	if (line == NULL)
 		return (NULL);
@@ -50,8 +49,9 @@ char	*ft_returnline(const char *s)
 
 char	*get_next_line(int fd)
 {
-	char	*buf;
 	char	*line;
+	char	*keep;
+	static char	*buf;
 	static char	*temp;
 	int	i;
 	int	n;
@@ -66,11 +66,11 @@ char	*get_next_line(int fd)
 		i = read (fd, buf, BUFFER_SIZE);
 		if (i == 0)
 			return (NULL);
-		n = ft_check (buf, '\0');
-		if (n == 0)
-			break;
-		n = ft_check (buf, '\n');
-		if (n == 0)
+		if (keep == NULL)
+			keep = ft_strdup(buf);
+		keep = ft_strjoin (keep, buf);
+		n = ft_check (keep);
+		if (n == 0 || n == 1)
 			break;
 	}
 	temp = ft_strchr (buf, '\n');

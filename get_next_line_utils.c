@@ -6,7 +6,7 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 18:24:48 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/04/06 18:09:19 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:10:52 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,25 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
+char	*ft_strdup(const char *s1)
+{
+	char	*s;
+	int		len;
+	int		i;
 
+	len = ft_strlen(s1);
+	s = (char *) malloc (len + 1);
+	if (s == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		s[i] = s1[i];
+		i++;
+	}
+	s[i] = '\0';
+	return (s);
+}
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
