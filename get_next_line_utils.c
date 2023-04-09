@@ -6,7 +6,7 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 18:24:48 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/04/08 18:10:52 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/09 14:28:19 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,3 +81,9 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	free (new);
 	return (new);
 }
+
+// #include <stdio.h>
+// int main()
+// {
+// 	printf("%s", ft_strchr("function", 'c'));
+// }
