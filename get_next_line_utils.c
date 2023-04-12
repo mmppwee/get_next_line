@@ -6,7 +6,7 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 18:24:48 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/04/09 14:28:19 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:30:57 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen (const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -30,7 +30,7 @@ char	*ft_strchr(const char *s, int c)
 	while (s[i] && s[i] != (char)c)
 		i++;
 	if (s[i] == (char)c)
-		return ((char *)&s[i + 1]);
+		return(ft_strdup ((char *)&s[i + 1]));
 	return (NULL);
 }
 
@@ -78,12 +78,21 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		j++;
 	}
 	new[i + j] = '\0';
-	free (new);
+	// free (new);
 	return (new);
 }
 
 // #include <stdio.h>
 // int main()
+// // {
+// // 	char *s;
+// // 	s = ft_strchr("function", 'c');
+// // 	printf("%s", s);
+// // 	free(s);
+// // }
 // {
-// 	printf("%s", ft_strchr("function", 'c'));
+// 	char *s;
+// 	s = ft_strjoin("aaaa", "ssss");
+// 	printf("%s", s);
+// 	free(s);
 // }
