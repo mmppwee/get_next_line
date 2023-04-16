@@ -6,7 +6,7 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:35:57 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/04/12 18:32:07 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/16 18:24:42 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_returnline(const char *s)
 	while (s[i] != '\n' && s[i] != '\0')
 		i++;
 	len = i;
-	printf("len: %d\n", len);
+	// printf("len: %d\n", len);
 	// printf("len:%d\n", len);
 	line = malloc (sizeof(char) * (len + 2));
 	if (line == NULL)
@@ -57,10 +57,10 @@ char	*ft_returnline(const char *s)
 
 char	*get_next_line(int fd)
 {
-	// char	*line;
+	char	*line;
 	char	*buf;
 	char	*keep = NULL;
-	// static char	*temp = NULL;
+	static char	*temp = NULL;
 	int	i;
 	int	n;
 
@@ -69,17 +69,25 @@ char	*get_next_line(int fd)
 	buf = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (buf == NULL)
 		return (NULL);
-	// if (temp != NULL)
-	// 	keep = ft_strdup(temp);
+	if (temp != NULL)
+		keep = ft_strdup(temp);
 	while (1)
 	{
 		i = read (fd, buf, BUFFER_SIZE);
-		// printf("==[%s]", buf);
+		// printf("buf: %s\n", buf);
 		if (i == 0)
+		{
+			if (ft_check(buf) == 1)
+			{
+				line = ft_returnline(buf);
+				printf("line: %s\n", line);
+				return(free(buf), line);
+			}
 			return (free(buf), NULL);
+		}
 		if (keep == NULL)
 			keep = ft_strdup(buf);
-		else if (keep != NULL)
+		else
 			{
 				// printf("buf: %s", buf);
 				char *keepstr;
@@ -87,7 +95,7 @@ char	*get_next_line(int fd)
 				// printf("keepstr:[%s]", keepstr);
 				keep = ft_strjoin (keepstr, buf);
 				free(keepstr);
-				// printf("+++%s, %s", keep, buf);
+				printf("keep: %s\nbuf: %s\n", keep, buf);
 				// return (free(keep), free(buf), NULL);
 			}
 		//printf("*keep: [%s]\n", keep);
@@ -99,24 +107,24 @@ char	*get_next_line(int fd)
 		// printf("wl- keep:%s, buf:%s, temp:%s", keep, buf, temp);
 		// else if (n == 1)
 		// 	{
-		// 		line = ft_strdup(buf);
-		// 		return (line);
+		// 		line = ft_returnline(buf);
+		// 		return (free(buf), line);
 		// 	}
-		// printf("temp: %s\n", temp);
+		printf("temp: %s\n", temp);
 		// printf("aabba\n");
 	}
-	// temp = ft_strchr (keep, '\n');
-	// // printf("*temp:%s", temp);
+	temp = ft_strchr (keep, '\n');
+	printf("temp: %s\n", temp);
 	// printf("keep===: %s", keep);
 	// printf("exit--\n");
-	// line = ft_returnline (keep);
-	// // printf("*line:%s", line);
+	line = ft_returnline (keep);
+	printf("line: %s\n", line);
 	// // printf("*temp:%s, *keep:%s", temp, keep);
-	// free (buf);
-	// free (keep);
+	free (buf);
+	free (keep);
 	// free(temp);
-	// return (line);
-	return(NULL);
+	return (line);
+	// return(NULL);
 }
 
 // int	test()
@@ -136,26 +144,29 @@ char	*get_next_line(int fd)
 //  {
 // 	printf("%d", ft_check("hsahiwikkl", 'o'));
 //  }
-int main(int ac, char **av)
+int main()//(int ac, char **av)
 {
 	int fd;
-	char *s;
+	// char *s;
 	// char *a;
 	// printf("Hello");
-	fd = open(av[1], O_RDONLY);
-	s = get_next_line(fd);
-	while (s != NULL)
-	{
-		free(s);
-		s = get_next_line(fd);
-	}
-	free(s);
+	// fd = open(av[1], O_RDONLY);
+	fd = open("41_no_nl", O_RDONLY);
+	// s = get_next_line(fd);
+	// while (s != NULL)
+	// {
+	// 	free(s);
+	// 	s = get_next_line(fd);
+	// }
+	// free(s);
 	// a = get_next_line(fd);
 	// printf("gnl: %s", a);
+	printf("gnl:%s", get_next_line(fd));
+	// printf("gnl:%s", get_next_line(fd));
+	// printf("gnl:%s", get_next_line(fd));
+	// printf("gnl:%s", get_next_line(fd));
+	// printf("gnl:%s", get_next_line(fd));
 	// free (a);
-	// printf("gnl:%s", get_next_line(fd));
-	// printf("gnl:%s", get_next_line(fd));
-	// printf("gnl:%s", get_next_line(fd));
 
-	close(fd);
+// 	close(fd);
 }
