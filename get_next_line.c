@@ -6,7 +6,7 @@
 /*   By: pwareepo <pwareepo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 14:35:57 by pwareepo          #+#    #+#             */
-/*   Updated: 2023/04/16 18:24:42 by pwareepo         ###   ########.fr       */
+/*   Updated: 2023/04/18 19:51:42 by pwareepo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_next_line(int fd)
 	char	*buf;
 	char	*keep = NULL;
 	static char	*temp = NULL;
-	int	i;
+	size_t	i;
 	int	n;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -69,21 +69,33 @@ char	*get_next_line(int fd)
 	buf = malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (buf == NULL)
 		return (NULL);
+	// printf("temp: %s", temp);
 	if (temp != NULL)
 		keep = ft_strdup(temp);
 	while (1)
 	{
 		i = read (fd, buf, BUFFER_SIZE);
 		// printf("buf: %s\n", buf);
+		if (i < 0)
+		{
+			free(buf);
+			free(keep);
+			return(NULL);
+		}
 		if (i == 0)
 		{
-			if (ft_check(buf) == 1)
+			if (ft_check(keep) == 1)
 			{
-				line = ft_returnline(buf);
-				printf("line: %s\n", line);
-				return(free(buf), line);
+				line = ft_returnline(keep);
+				// printf("temp: {%s}\n", temp);
+				// printf("line: {%s}\n", line);
+				free(keep);
+				free(buf);
+				return(line);
 			}
-			return (free(buf), NULL);
+			free(keep);
+			free(buf);
+			return (NULL);
 		}
 		if (keep == NULL)
 			keep = ft_strdup(buf);
@@ -94,31 +106,32 @@ char	*get_next_line(int fd)
 				keepstr = keep;
 				// printf("keepstr:[%s]", keepstr);
 				keep = ft_strjoin (keepstr, buf);
+				// printf("join: %s", ft_strjoin("abcd\n","1234\n"));
 				free(keepstr);
-				printf("keep: %s\nbuf: %s\n", keep, buf);
+				// printf("keep: %s\nbuf: %s\n", keep, buf);
 				// return (free(keep), free(buf), NULL);
 			}
-		//printf("*keep: [%s]\n", keep);
 		n = ft_check (buf);
 		// printf("check: %d", n);
 		// printf("address: %p", buf);
 		if (n == 0)
 			break;
+		//printf("*keep: [%s]\n", keep);
 		// printf("wl- keep:%s, buf:%s, temp:%s", keep, buf, temp);
 		// else if (n == 1)
 		// 	{
 		// 		line = ft_returnline(buf);
 		// 		return (free(buf), line);
 		// 	}
-		printf("temp: %s\n", temp);
+		// printf("temp: %s\n", temp);
 		// printf("aabba\n");
 	}
 	temp = ft_strchr (keep, '\n');
-	printf("temp: %s\n", temp);
+	// printf("temp: [%s]\n", temp);
 	// printf("keep===: %s", keep);
 	// printf("exit--\n");
 	line = ft_returnline (keep);
-	printf("line: %s\n", line);
+	// printf("line: [%s]\n", line);
 	// // printf("*temp:%s, *keep:%s", temp, keep);
 	free (buf);
 	free (keep);
@@ -151,7 +164,7 @@ int main()//(int ac, char **av)
 	// char *a;
 	// printf("Hello");
 	// fd = open(av[1], O_RDONLY);
-	fd = open("41_no_nl", O_RDONLY);
+	fd = open("41_with_nl", O_RDONLY);
 	// s = get_next_line(fd);
 	// while (s != NULL)
 	// {
@@ -161,9 +174,12 @@ int main()//(int ac, char **av)
 	// free(s);
 	// a = get_next_line(fd);
 	// printf("gnl: %s", a);
+	// get_next_line(fd);
+	// get_next_line(fd);
+	// get_next_line(fd);
 	printf("gnl:%s", get_next_line(fd));
-	// printf("gnl:%s", get_next_line(fd));
-	// printf("gnl:%s", get_next_line(fd));
+	printf("gnl:%s", get_next_line(fd));
+	printf("gnl:%s", get_next_line(fd));
 	// printf("gnl:%s", get_next_line(fd));
 	// printf("gnl:%s", get_next_line(fd));
 	// free (a);
